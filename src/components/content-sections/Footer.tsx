@@ -1,12 +1,6 @@
 // src/components/content-sections/Footer.tsx
 
-import { cacheLife } from "next/cache";
-
-async function CurrentYear() {
-  "use cache";
-  cacheLife("days"); // recomputed at most once a day, so it flips on 1 January
-  return <>{new Date().getFullYear()}</>;
-}
+import CurrentYear from "@/components/functional/CurrentYear";
 
 export default function Footer() {
   return (

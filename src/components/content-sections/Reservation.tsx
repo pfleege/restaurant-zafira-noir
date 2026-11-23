@@ -41,9 +41,21 @@ export default function Reservation() {
     };
 
     try {
-      const response = await fetch("/api/reservations", {
+      // Static site: there is no server to save the booking. If
+      // NEXT_PUBLIC_RESERVATION_URL is set (e.g. a Formspree URL) the form is
+      // posted there; otherwise this is a demo and just pretends to send.
+      const url = process.env.NEXT_PUBLIC_RESERVATION_URL;
+      if (!url) {
+        await new Promise((r) => setTimeout(r, 600));
+        setSubmitted(true);
+        return;
+      }
+      const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(payload),
       });
 
